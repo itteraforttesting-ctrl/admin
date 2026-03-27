@@ -1,0 +1,5 @@
+{
+  "name": "ITForge",
+  "description": "The Ultimate IT Operations Command Center for Corporations. Manage assets, budgets, cloud, tickets, and more.",
+  "requestFramePermissions": ["camera", "microphone", "geolocation"]
+}

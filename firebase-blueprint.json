@@ -1,0 +1,142 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile with role and department",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "manager", "technician", "viewer"] },
+        "department": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Asset": {
+      "title": "IT Asset",
+      "description": "Hardware or software asset",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["hardware", "software"] },
+        "category": { "type": "string" },
+        "serialNumber": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "maintenance", "retired", "lost"] },
+        "assignedTo": { "type": "string" },
+        "assignedToName": { "type": "string" },
+        "warrantyExpiry": { "type": "string", "format": "date" },
+        "purchaseDate": { "type": "string", "format": "date" },
+        "purchasePrice": { "type": "number" },
+        "qrCode": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "required": ["name", "type", "status"]
+    },
+    "Budget": {
+      "title": "Budget Entry",
+      "description": "Budget planning and ledger entry",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "amount": { "type": "number" },
+        "type": { "type": "string", "enum": ["income", "expense"] },
+        "category": { "type": "string" },
+        "department": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "invoiceUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "paid"] }
+      },
+      "required": ["title", "amount", "type", "date"]
+    },
+    "Subscription": {
+      "title": "SaaS Subscription",
+      "description": "Cloud or software subscription",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "vendor": { "type": "string" },
+        "cost": { "type": "number" },
+        "billingCycle": { "type": "string", "enum": ["monthly", "yearly"] },
+        "renewalDate": { "type": "string", "format": "date" },
+        "seats": { "type": "integer" },
+        "seatsUsed": { "type": "integer" },
+        "status": { "type": "string", "enum": ["active", "cancelled", "expired"] }
+      },
+      "required": ["name", "cost", "renewalDate"]
+    },
+    "CloudResource": {
+      "title": "Cloud Resource",
+      "description": "Mock cloud resource for AWS/Azure/GCP",
+      "type": "object",
+      "properties": {
+        "provider": { "type": "string", "enum": ["aws", "azure", "gcp"] },
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "region": { "type": "string" },
+        "status": { "type": "string" },
+        "costMonthly": { "type": "number" }
+      },
+      "required": ["provider", "name", "type"]
+    },
+    "Password": {
+      "title": "Vault Entry",
+      "description": "Encrypted password entry",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "username": { "type": "string" },
+        "encryptedPassword": { "type": "string" },
+        "url": { "type": "string" },
+        "category": { "type": "string" },
+        "teamId": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "encryptedPassword"]
+    },
+    "Ticket": {
+      "title": "IT Helpdesk Ticket",
+      "description": "Support ticket",
+      "type": "object",
+      "properties": {
+        "subject": { "type": "string" },
+        "description": { "type": "string" },
+        "priority": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+        "status": { "type": "string", "enum": ["open", "in-progress", "resolved", "closed"] },
+        "requesterId": { "type": "string" },
+        "requesterName": { "type": "string" },
+        "assigneeId": { "type": "string" },
+        "assigneeName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["subject", "priority", "status", "requesterId"]
+    },
+    "Note": {
+      "title": "Knowledge Base Note",
+      "description": "Wiki or internal note",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "category": { "type": "string" },
+        "authorId": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "content"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": { "schema": "User", "description": "User profiles" },
+    "/assets/{assetId}": { "schema": "Asset", "description": "IT Assets" },
+    "/budgets/{budgetId}": { "schema": "Budget", "description": "Budget entries" },
+    "/subscriptions/{subId}": { "schema": "Subscription", "description": "SaaS subscriptions" },
+    "/cloud_resources/{resId}": { "schema": "CloudResource", "description": "Cloud resources" },
+    "/passwords/{passId}": { "schema": "Password", "description": "Vault entries" },
+    "/tickets/{ticketId}": { "schema": "Ticket", "description": "Helpdesk tickets" },
+    "/notes/{noteId}": { "schema": "Note", "description": "Knowledge base notes" }
+  }
+}
